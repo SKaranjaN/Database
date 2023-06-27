@@ -10,6 +10,7 @@ class User(db.Model, SerializerMixin):
     name = db.Column(db.String())
 
     comments = db.relationship("Comment", backref = "user")
+    serialize_rules = ("-comments.user")
 
     def __repr__(self):
         return f'<User: {self.name}>'
@@ -25,6 +26,7 @@ class Comment(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    serialize_rules = ("-user.comments")
 
     def __repr__(self):
         return f'<Comment: {self.post}>'
