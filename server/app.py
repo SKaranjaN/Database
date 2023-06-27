@@ -111,7 +111,15 @@ class Comments(Resource):
 api.add_resource(Comments, "/comments")
 
 class Comment_By_Id(Resource):
-    pass
+    
+
+    def get(self, id):
+        comments = Comment.query.filter_by(id=id).first().to_dict()
+        response = make_response(comments, 200)
+
+        return response
+api.add_resource(Comment_By_Id, "/comments/<int:id>")
+
 
 
 if __name__ == '__main__':
