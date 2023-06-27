@@ -118,6 +118,20 @@ class Comment_By_Id(Resource):
         response = make_response(comments, 200)
 
         return response
+    
+    def patch(self, id):
+        comments = Comment.query.filter_by(id=id).first()
+        for attr in request.form:
+            setattr(comments, attr, request.form[attr])
+
+        db.session.add(comments)
+        db.session.commit()
+
+        response_dict = comments.to_dict()
+        response = make_response(response_dict, 200)
+
+        return response
+
 api.add_resource(Comment_By_Id, "/comments/<int:id>")
 
 
