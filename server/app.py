@@ -49,9 +49,19 @@ class Users(Resource):
 
         response_dict = new_user.to_dict()
         response = make_response(response_dict, 201)
-        
+
         return response
 api.add_resource(Users, "/users")
+
+class User_by_Id(Resource):
+
+    def get(self, id):
+        response_dict = User.query.filter_by(id=id).first().to_dict()
+        response = make_response(response_dict, 200)
+        
+        return response
+api.add_resource(User_by_Id, "/users/<int:id>")
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
