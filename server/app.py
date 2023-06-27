@@ -60,6 +60,20 @@ class User_by_Id(Resource):
         response = make_response(response_dict, 200)
         
         return response
+    
+    def patch(self, id):
+        updated_one = User.query.filter_by(id=id).first()
+        for attr in request.form:
+            setattr(updated_one, attr, request.form[attr])
+
+        db.session.add(updated_one)
+        db.session.commit()
+
+        response_dict = updated_one.to_dict()
+        response = make_response(response_dict, 200)
+
+        return response
+
 api.add_resource(User_by_Id, "/users/<int:id>")
 
 
