@@ -131,6 +131,17 @@ class Comment_By_Id(Resource):
         response = make_response(response_dict, 200)
 
         return response
+    
+    def delete(self, id):
+        comments = Comment.query.filter_by(id=id).first()
+
+        db.session.delete(comments)
+        db.session.commit()
+        
+        response_dict = {"message": "Comment deleted successfully"}
+        response = make_response(response_dict, 200)
+
+        return response
 
 api.add_resource(Comment_By_Id, "/comments/<int:id>")
 
