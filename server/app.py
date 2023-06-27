@@ -12,4 +12,19 @@ app.json.compact = False
 
 migrate = Migrate(app, db)
 db.init_app(app)
+
+
 api = Api(app)
+
+class Index(Resource):
+
+    def get(self):
+        response_dict = {
+            "message" : "Database Home API"
+        }
+        response = make_response(
+            response_dict,
+            200
+        )
+        return response
+api.add_resource(Index, "/")
