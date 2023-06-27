@@ -73,6 +73,19 @@ class User_by_Id(Resource):
         response = make_response(response_dict, 200)
 
         return response
+    
+    def delete(self, id):
+        selected_one = User.query.filter_by(id=id).first()
+        
+        db.session.delete(selected_one)
+        db.session.commit()
+
+        response_dict = {"message": "Delete successfull"}
+        response = make_response(
+            jsonify(response_dict),
+            200
+        )
+        return response
 
 api.add_resource(User_by_Id, "/users/<int:id>")
 
