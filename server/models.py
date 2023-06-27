@@ -34,7 +34,12 @@ class Comment(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "post": self.post,
+        }
     
 
     def __repr__(self):

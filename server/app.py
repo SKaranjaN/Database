@@ -89,6 +89,18 @@ class User_by_Id(Resource):
 
 api.add_resource(User_by_Id, "/users/<int:id>")
 
+class Comments(Resource):
+    
+    def get(self):
+        comments = [comment.to_dict() for comment in Comment.query.all()]
+        response = make_response(jsonify(comments), 200)
+
+        return response
+api.add_resource(Comments, "/comments")
+
+class Comment_By_Id(Resource):
+    pass
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
