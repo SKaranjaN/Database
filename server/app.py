@@ -2,7 +2,7 @@ from flask import Flask, request, make_response, jsonify
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 
-from models import db
+from models import db, User, Comment
 
 
 app = Flask(__name__)
@@ -28,3 +28,18 @@ class Index(Resource):
         )
         return response
 api.add_resource(Index, "/")
+
+class Users(Resource):
+
+    def get(self):
+        users = [user.to_dict() for user in User.query.all()]
+        response = make_response(
+            jsonify(users),
+            200
+            )
+
+        return response
+api.add_resource(Users, "/users")
+
+if __name__ == '__main__':
+    app.run(port=5555, debug=True)
