@@ -96,6 +96,18 @@ class Comments(Resource):
         response = make_response(jsonify(comments), 200)
 
         return response
+    
+    def post(self):
+        new_comment = Comment(
+            post = request.form["post"],
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+
+        response_dict = new_comment.to_dict()
+        response = make_response(response_dict, 201)
+
+        return response
 api.add_resource(Comments, "/comments")
 
 class Comment_By_Id(Resource):
